@@ -1,0 +1,93 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id           Int        @id @default(autoincrement())
+    email        String     @unique
+    passwordHash String
+    name         String?
+    phone        String?
+    address      Json?
+    role         Role       @default(USER)
+    isVerified   Boolean    @default(false)
+    createdAt    DateTime   @default(now())
+    orders       Order[]
+    cartItems    CartItem[]
+}
+
+model Category {
+    id          Int       @id @default(autoincrement())
+    name        String    @unique
+    description String?
+    slug        String    @unique
+    createdAt   DateTime  @default(now())
+    products    Product[]
+}
+
+model Product {
+    id            Int         @id @default(autoincrement())
+    name          String
+    description   String?
+    price         Decimal     @db.Decimal(10, 2)
+    stockQuantity Int
+    category      Category    @relation(fields: [categoryId], references: [id])
+    categoryId    Int
+    imageUrl      String?
+    rating        Decimal?    @db.Decimal(3, 2)
+    createdAt     DateTime    @default(now())
+    updatedAt     DateTime    @updatedAt
+    orderItems    OrderItem[]
+    CartItem      CartItem[]
+}
+
+model Order {
+    id              Int         @id @default(autoincrement())
+    user            User        @relation(fields: [userId], references: [id])
+    userId          Int
+    totalAmount     Decimal     @db.Decimal(10, 2)
+    status          OrderStatus @default(Pending)
+    shippingAddress Json
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    items           OrderItem[]
+}
+
+model OrderItem {
+    id        Int     @id @default(autoincrement())
+    order     Order   @relation(fields: [orderId], references: [id])
+    orderId   Int
+    product   Product @relation(fields: [productId], references: [id])
+    productId Int
+    quantity  Int
+    price     Decimal @db.Decimal(10, 2)
+    subtotal  Decimal @db.Decimal(10, 2)
+}
+
+model CartItem {
+    id        Int      @id @default(autoincrement())
+    sessionId String
+    userId    Int?
+    user      User?    @relation(fields: [userId], references: [id])
+    product   Product  @relation(fields: [productId], references: [id])
+    productId Int
+    quantity  Int
+    createdAt DateTime @default(now())
+}
+
+enum Role {
+    USER
+    ADMIN
+}
+
+enum OrderStatus {
+    Pending
+    Processing
+    Shipped
+    Delivered
+}
