@@ -3,6 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -29,7 +30,7 @@ export default function RegisterPage() {
       setName("");
       setEmail("");
       setPassword("");
-
+      toast.success("Registration successful!");
       // Optional: redirect after a few seconds
       setTimeout(() => router.push("/auth/login"), 2000);
     } catch (err: any) {

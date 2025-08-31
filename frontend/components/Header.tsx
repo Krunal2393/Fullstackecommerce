@@ -33,7 +33,7 @@ export default function Header() {
       </Link>
 
       <nav className="flex gap-4 items-center">
-        <Link href="/products">Products</Link>
+        <Link href="/">Products</Link>
         {!loading && !user && <Link href="/auth/login">Login</Link>}
         {!loading && !user && <Link href="/auth/register">Register</Link>}
         {!loading && user && <Link href="/auth/logout">Logout</Link>}

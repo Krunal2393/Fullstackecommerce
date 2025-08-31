@@ -68,7 +68,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", requireAuth, requireAdmin, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const payload = z
       .object({

@@ -27,7 +27,7 @@ export default function CartPage() {
       <div className="bg-white shadow rounded p-6 max-w-3xl mx-auto">
         <h1 className="text-2xl font-bold mb-4">Cart</h1>
         <p>Your cart is empty.</p>
-        <Link href="/products" className="text-blue-500 underline">
+        <Link href="/" className="text-blue-500 underline">
           Go to Products
         </Link>
       </div>

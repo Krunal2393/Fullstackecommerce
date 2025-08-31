@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", requireAuth, requireAdmin, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const { name, description } = req.body;
     const slug = slugify(name, { lower: true });
@@ -27,7 +27,7 @@ router.post("/", requireAuth, requireAdmin, async (req, res, next) => {
   }
 });
 
-router.put("/:id", requireAuth, requireAdmin, async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const id = Number(req.params.id);
     const { name, description } = req.body;
