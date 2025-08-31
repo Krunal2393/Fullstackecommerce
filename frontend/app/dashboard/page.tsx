@@ -73,7 +73,7 @@ export default function DashboardPage() {
     setNewCategory({ name: "", description: "" });
     fetchCategories();
   };
-
+  console.log("first");
   const handleEditCategory = (cat: any) => {
     setNewCategory({ name: cat.name, description: cat.description || "" });
     setEditCategoryId(cat.id);
